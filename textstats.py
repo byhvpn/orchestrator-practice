@@ -1,6 +1,10 @@
 """练手项目：简单的文本统计工具。"""
 
 
+import re
+from collections import Counter
+
+
 def count_chars(text: str) -> int:
     """返回字符数（不含空白字符）。"""
     return sum(1 for ch in text if not ch.isspace())
@@ -39,3 +43,16 @@ def count_hanzi(text: str) -> int:
         any(start <= ord(ch) <= end for start, end in _HANZI_RANGES)
         for ch in text
     )
+
+
+def top_words(text: str, n: int) -> list[tuple[str, int]]:
+    """返回出现次数最多的前 n 个英文单词及其次数。"""
+    if n <= 0:
+        return []
+
+    words = (
+        word.lower()
+        for word in re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)*", text)
+    )
+    counts = Counter(words)
+    return sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:n]

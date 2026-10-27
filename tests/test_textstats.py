@@ -1,4 +1,5 @@
 from textstats import count_chars, count_hanzi, count_lines, count_words
+from textstats import top_words
 
 
 def test_count_chars_ignores_whitespace():
@@ -79,6 +80,35 @@ def test_count_hanzi_rare_character():
 
 def test_count_hanzi_extension_j_character():
     assert count_hanzi("\U000323B0") == 1
+
+
+def test_top_words_keeps_only_internal_apostrophes():
+    assert top_words("don't 'quoted' rock'n'roll cats'", 4) == [
+        ("cats", 1),
+        ("don't", 1),
+        ("quoted", 1),
+        ("rock'n'roll", 1),
+    ]
+
+
+def test_top_words_uses_only_ascii_letters():
+    assert top_words("café foo_bar abc123def 中word文 Kelvin", 10) == [
+        ("abc", 1),
+        ("bar", 1),
+        ("caf", 1),
+        ("def", 1),
+        ("elvin", 1),
+        ("foo", 1),
+        ("word", 1),
+    ]
+
+
+def test_top_words_returns_all_words_when_n_is_large():
+    assert top_words("B a b", 10) == [("b", 2), ("a", 1)]
+
+
+def test_top_words_returns_empty_for_negative_n():
+    assert top_words("a b", -1) == []
 
 
 def test_count_hanzi_emoji():
