@@ -51,7 +51,7 @@ def top_words(text: str, n: int) -> list[tuple[str, int]]:
         return []
 
     words = (
-        word.lower()
+        word
         for word in re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)*", text)
     )
     counts = Counter(words)
