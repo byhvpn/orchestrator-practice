@@ -75,3 +75,11 @@ def test_count_hanzi_mixed_chinese_and_digit():
 
 def test_count_hanzi_rare_character():
     assert count_hanzi("𠮷") == 1
+
+
+def test_count_hanzi_extension_j_character():
+    assert count_hanzi("\U000323B0") == 1
+
+
+def test_count_hanzi_emoji():
+    assert count_hanzi("😀") == 0
