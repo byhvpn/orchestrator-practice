@@ -9,3 +9,8 @@ def count_chars(text: str) -> int:
 def count_words(text: str) -> int:
     """返回以空白分隔的英文单词数。"""
     return len(text.split())
+
+
+def count_lines(text: str) -> int:
+    """返回文本的行数。"""
+    return len(text.splitlines())
